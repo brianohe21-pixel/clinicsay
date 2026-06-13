@@ -2,6 +2,9 @@
   "name": "clinicsay",
   "private": true,
   "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": "22"
+  },
   "scripts": {
     "install:all": "pnpm install",
     "backend:dev": "pnpm --filter backend start:dev",
