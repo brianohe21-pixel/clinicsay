@@ -8,6 +8,7 @@ import {
 } from '../../domain/patient-alert/patient-alert.error-codes';
 import { PATIENT_ALERT_REPOSITORY } from '../../domain/patient-alert/patient-alert.repository.interface';
 import { UpdatePatientAlertUseCase } from './update-patient-alert.use-case';
+import { createMockPatientAlertRepository } from '../../../test/mocks';
 
 const mockAlert = PatientAlertEntity.create({
   id: 'alert-001',
@@ -31,14 +32,7 @@ const conflictingAlert = PatientAlertEntity.create({
   updatedAt: new Date(),
 });
 
-const mockRepo = {
-  findByPatientId: jest.fn(),
-  findById: jest.fn(),
-  findActiveByUniqueKey: jest.fn(),
-  save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
-};
+const mockRepo = createMockPatientAlertRepository();
 
 describe('UpdatePatientAlertUseCase', () => {
   let useCase: UpdatePatientAlertUseCase;

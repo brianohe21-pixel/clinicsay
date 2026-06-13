@@ -3,6 +3,7 @@ import { AlertType } from '../../domain/patient-alert/alert-type.enum';
 import { PatientAlertEntity } from '../../domain/patient-alert/patient-alert.entity';
 import { PATIENT_ALERT_REPOSITORY } from '../../domain/patient-alert/patient-alert.repository.interface';
 import { GetPatientAlertsUseCase } from './get-patient-alerts.use-case';
+import { createMockPatientAlertRepository } from '../../../test/mocks';
 
 function makeAlert(
   id: string,
@@ -21,14 +22,7 @@ function makeAlert(
   });
 }
 
-const mockRepo = {
-  findByPatientId: jest.fn(),
-  findById: jest.fn(),
-  findActiveByUniqueKey: jest.fn(),
-  save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
-};
+const mockRepo = createMockPatientAlertRepository();
 
 describe('GetPatientAlertsUseCase', () => {
   let useCase: GetPatientAlertsUseCase;

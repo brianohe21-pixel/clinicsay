@@ -20,7 +20,7 @@ clinicsay/
 
 ### Requisitos previos
 
-- Node.js 22
+- Node.js 20.19+
 - pnpm 9+
 
 ### Instalación

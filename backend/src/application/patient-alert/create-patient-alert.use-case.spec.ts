@@ -8,6 +8,11 @@ import {
 } from '../../domain/patient-alert/patient-alert.error-codes';
 import { PATIENT_ALERT_REPOSITORY } from '../../domain/patient-alert/patient-alert.repository.interface';
 import { CreatePatientAlertUseCase } from './create-patient-alert.use-case';
+import {
+  createMockPatientAlertRepository,
+  createMockPrismaPatientLookup,
+  toPrismaService,
+} from '../../../test/mocks';
 
 const mockPatient = {
   id: 'patient-001',
@@ -30,27 +35,18 @@ const mockAlert = PatientAlertEntity.create({
   updatedAt: new Date(),
 });
 
-const mockRepo = {
-  findByPatientId: jest.fn(),
-  findById: jest.fn(),
-  findActiveByUniqueKey: jest.fn(),
-  save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
-};
-
-const mockPrismaService = {
-  patient: {
-    findUnique: jest.fn(),
-  },
-};
+const mockRepo = createMockPatientAlertRepository();
+const mockPrismaService = createMockPrismaPatientLookup();
 
 describe('CreatePatientAlertUseCase', () => {
   let useCase: CreatePatientAlertUseCase;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    useCase = new CreatePatientAlertUseCase(mockRepo, mockPrismaService as any);
+    useCase = new CreatePatientAlertUseCase(
+      mockRepo,
+      toPrismaService(mockPrismaService),
+    );
   });
 
   it('should throw ConflictException when an identical active alert already exists', async () => {

@@ -3,6 +3,7 @@ import {
   NotFoundException,
   ValidationPipe,
 } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { AlertSeverity } from '../src/domain/patient-alert/alert-severity.enum';
@@ -12,6 +13,11 @@ import { PatientAlertErrorCode } from '../src/domain/patient-alert/patient-alert
 import { PATIENT_ALERT_REPOSITORY } from '../src/domain/patient-alert/patient-alert.repository.interface';
 import { PrismaService } from '../src/infrastructure/prisma/prisma.service';
 import { PatientAlertModule } from '../src/modules/patient-alert.module';
+import {
+  createMockPatientAlertRepository,
+  createMockPrismaPatientLookup,
+  toPrismaService,
+} from './mocks';
 
 const PATIENT_ID = 'mock-patient-001';
 
@@ -41,23 +47,11 @@ function makeAlert(
   });
 }
 
-const mockRepo = {
-  findByPatientId: jest.fn(),
-  findById: jest.fn(),
-  findActiveByUniqueKey: jest.fn(),
-  save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
-};
-
-const mockPrismaService = {
-  patient: {
-    findUnique: jest.fn(),
-  },
-};
+const mockRepo = createMockPatientAlertRepository();
+const mockPrismaService = createMockPrismaPatientLookup();
 
 describe('PatientAlertController (e2e)', () => {
-  let app: any;
+  let app: NestExpressApplication;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -66,10 +60,10 @@ describe('PatientAlertController (e2e)', () => {
       .overrideProvider(PATIENT_ALERT_REPOSITORY)
       .useValue(mockRepo)
       .overrideProvider(PrismaService)
-      .useValue(mockPrismaService)
+      .useValue(toPrismaService(mockPrismaService))
       .compile();
 
-    app = moduleFixture.createNestApplication();
+    app = moduleFixture.createNestApplication<NestExpressApplication>();
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
