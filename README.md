@@ -2,6 +2,8 @@
 
 Feature fullstack de alertas clínicas implementada como prueba técnica take-home con IA para ClinicSay.
 
+**Demo en vivo:** [https://clinicsay-frontend.vercel.app/](https://clinicsay-frontend.vercel.app/)
+
 ---
 
 ## Estructura del proyecto
