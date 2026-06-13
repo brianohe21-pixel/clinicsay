@@ -1,0 +1,45 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Patient {
+  id        String         @id @default(uuid())
+  name      String
+  dni       String         @unique
+  age       Int
+  location  String
+  alerts    PatientAlert[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model PatientAlert {
+  id        String        @id @default(uuid())
+  patientId String
+  type      AlertType
+  severity  AlertSeverity
+  message   String
+  isActive  Boolean       @default(true)
+  patient   Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum AlertType {
+  ALLERGY
+  MEDICAL_RISK
+  SPECIAL_CONDITION
+  ADMINISTRATIVE
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}

@@ -1,0 +1,19 @@
+{
+  "name": "clinicsay",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "install:all": "pnpm install",
+    "backend:dev": "pnpm --filter backend start:dev",
+    "backend:build": "pnpm --filter backend build",
+    "backend:test": "pnpm --filter backend test",
+    "backend:test:e2e": "pnpm --filter backend test:e2e",
+    "backend:db:migrate": "pnpm --filter backend db:migrate",
+    "backend:db:seed": "pnpm --filter backend db:seed",
+    "backend:db:migrate:deploy": "pnpm --filter backend db:migrate:deploy",
+    "frontend:dev": "pnpm --filter frontend dev",
+    "frontend:build": "pnpm --filter frontend build",
+    "setup:turso": "bash scripts/setup-turso.sh",
+    "verify:deploy": "bash scripts/verify-deploy.sh"
+  }
+}

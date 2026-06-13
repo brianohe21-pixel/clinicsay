@@ -1,0 +1,19 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": ["ts-jest", {
+      "tsconfig": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolvePackageJsonExports": false
+      }
+    }]
+  },
+  "moduleNameMapper": {
+    "^.+/generated/prisma/client$": "<rootDir>/../src/__mocks__/prisma-client.mock.ts",
+    "^@prisma/adapter-libsql$": "<rootDir>/../src/__mocks__/prisma-adapter-libsql.mock.ts"
+  }
+}

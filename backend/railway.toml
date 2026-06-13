@@ -1,0 +1,8 @@
+[build]
+builder = "nixpacks"
+buildCommand = "pnpm install && pnpm exec prisma generate && pnpm run build"
+
+[deploy]
+startCommand = "node dist/src/main"
+releaseCommand = "pnpm exec prisma migrate deploy"
+restartPolicyType = "on_failure"
